@@ -32,4 +32,34 @@ public class Login {
     public boolean checkUserName() {
         return username.contains("_") && username.length() <=5;
     }
+    
+    //checks if the password is in the correct format
+    public boolean checkPasswordComplexity() {
+        
+        //they start as false because we havent found any of them yet
+        boolean hasCapital = false;
+        boolean hasNumber = false;
+        boolean hasSpecial = false;
+        
+        //loops through every character in the password
+        for (int i = 0; i < password.length(); i++) {
+            char character = password.charAt(i);
+            
+            if (Character.isUpperCase(character)) {
+                hasCapital = true;
+            }
+            
+            if (Character.isDigit(character)) {
+                hasNumber = true;
+            }
+            
+            if (!Character.isLetterOrDigit(character)) {
+                hasSpecial = true;
+            }
+        }
+        return password.length() >= 8
+                && hasCapital
+                && hasNumber
+                && hasSpecial;
+    }
 }
