@@ -26,6 +26,10 @@ public class Login {
         this.username = username;
         this.password = password;
         this.cellPhoneNumber = cellPhoneNumber;   
-        
+    }
+    
+    //checks if the username is in the correct format
+    public boolean checkUserName() {
+        return username.contains("_") && username.length() <=5;
     }
 }
