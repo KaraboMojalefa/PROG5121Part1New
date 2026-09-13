@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.prog5121part1new;
-
+import java.util.regex.Pattern;
 /**
  *
  * @author Student
@@ -61,5 +61,16 @@ public class Login {
                 && hasCapital
                 && hasNumber
                 && hasSpecial;
+    }
+    //checks if the cell phone number is in the correct format
+    //Regex reference: Oracle Java Pattern documentation
+    public boolean checkCellPhoneNumber() {
+        
+        String regex = "^\\+27\\d{9}$";
+        //^ - starts at the beginning
+        //\\+27 - must start with +27
+        //\\d{9} - must have 9 digits after +27
+        //$ - ends there
+        return Pattern.matches(regex, cellPhoneNumber);
     }
 }
