@@ -14,7 +14,27 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class LoginTest {
     
-    public LoginTest() {
+    @Test
+    public void testCheckUserName() {
+        
+        Login validLogin = new Login(
+        "Karabo",
+        "Mojalefa",
+        "kyl_1",//true
+        "Ch&&sec@ke99!",
+        "+27697324722"
+        );
+        
+        Login invalidLogin = new Login (
+        "Karabo",
+        "Mojalefa",
+        "kyle!!!!!!!!!",//false
+        "Ch&&sec@ke99!",
+        "+27697324722"
+        );
+        
+        assertTrue(validLogin.checkUserName());
+        assertFalse(invalidLogin.checkUserName());
     }
     
 }
