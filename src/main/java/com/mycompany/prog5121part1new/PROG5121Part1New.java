@@ -44,5 +44,9 @@ public class PROG5121Part1New {
         password,
         cellPhoneNumber
         );
+        
+        String registrationMessage = login.registerUser(); //calls the registerUser()
+                                                           //from Login class
+        System.out.println(registrationMessage);
     }
 }
