@@ -17,5 +17,15 @@ public class PROG5121Part1New {
 
     public static void main(String[] args) {
        Scanner input = new Scanner(System.in);
+       
+        //shows the question to the user
+        System.out.println("Enter your name: ");
+        /*
+        waits for the user to type their response and stores it in the variable
+        */
+        String firstName = input.nextLine();
+        
+        System.out.println("Enter your last name: ");
+        String lastName = input.nextLine();
     }
 }
