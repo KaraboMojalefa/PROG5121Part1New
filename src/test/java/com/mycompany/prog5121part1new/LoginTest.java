@@ -91,7 +91,7 @@ public class LoginTest {
     @Test
     public void testLoginUser() {
         
-        Login validLogin = new Login(
+        Login login = new Login(
         "Karabo",
         "Mojalefa",
         "kyl_1",
@@ -107,5 +107,32 @@ public class LoginTest {
         login.setLoginDetails("wrong", "password");
         
         assertFalse(login.loginUser());
+    }
+    
+    //tests the login status message
+    @Test
+    public void testReturnLoginStatus() {
+        
+        Login login = new Login(
+        "Karabo",
+        "Mojalefa",
+        "kyl_1",
+        "Ch&&sec@ke99!",
+        "+27697324722"
+        );
+        
+        login.setLoginDetails("kyl_1", "Ch&&sec@ke99!");
+        
+        assertEquals(
+            "Welcome Karabo, Mojalefa it is great to see you again.",
+                login.returnLoginStatus()
+        );
+        
+        login.setLoginDetails("wrong", "password");
+        
+        assertEquals(
+            "Username or password incorrect, please try again.",
+                login.returnLoginStatus()
+        );
     }
 }
