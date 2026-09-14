@@ -62,6 +62,7 @@ public class Login {
                 && hasNumber
                 && hasSpecial;
     }
+    
     //checks if the cell phone number is in the correct format
     //Regex reference: Oracle Java Pattern documentation
     public boolean checkCellPhoneNumber() {
@@ -72,5 +73,26 @@ public class Login {
         //\\d{9} - must have 9 digits after +27
         //$ - ends there
         return Pattern.matches(regex, cellPhoneNumber);
+    }
+    
+    //registers the user details
+    public String registerUser() {
+        
+        if (!checkUserName()) {
+            return "Username is not correctly formatted; please ensure that your "
+                    + "username contains an underscore and is no more than five"
+                    + " characters in length.";
+        }
+        if (!checkPasswordComplexity()) {
+            return "Password is not correctly formatted; please ensure that "
+                    + "the password contains at least eight characters, a capital"
+                    + " letter, a number, and a special character.";
+        }
+        if (!checkCellPhoneNumber()) {
+            return "Cell phone number incorrectly formatted or does not contain "
+                    + "international code.";
+        }
+        
+        return "Registration successful.";
     }
 }
