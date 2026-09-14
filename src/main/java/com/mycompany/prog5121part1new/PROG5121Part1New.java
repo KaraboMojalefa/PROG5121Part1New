@@ -55,5 +55,8 @@ public class PROG5121Part1New {
         
         System.out.println("Enter your password to login: ");
         String loginPassword = input.nextLine();
+        
+        //we send the username & password typed by user into the setLoginDetails method
+        login.setLoginDetails(loginUsername, loginPassword);
     }
 }
