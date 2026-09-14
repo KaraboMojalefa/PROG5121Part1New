@@ -188,4 +188,22 @@ public class LoginTest {
                 login.registerUser()
         );
     }
+    
+    //test the cell phone error message
+    @Test
+    public void testInvalidCellPhoneRegistration() {
+        
+        Login login = new Login(
+        "Karabo",
+        "Mojalefa",
+        "kyl_1",
+        "Ch&&sec@ke99!",
+        "05896416"//the phone number will fail
+        );
+        
+        assertEquals(
+            "Cell phone number incorrectly formatted or does not contain "
+                    + "international code", login.registerUser()
+        );
+    }
 }
