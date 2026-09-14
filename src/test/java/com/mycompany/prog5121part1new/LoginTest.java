@@ -168,4 +168,24 @@ public class LoginTest {
                 invalidLogin.registerUser()
         );
     }
+    
+    //tests the password error message
+    @Test
+    public void testInvalidPasswordRegistration() {
+        
+        Login login = new Login (
+        "Karabo",
+        "Mojalefa",
+        "kyl_1",
+        "password",
+        "+27697324722"        
+        );//the password fails, so we expect the password error message
+        
+        assertEquals(
+            "Password is not correctly formatted; please ensure that the password "
+                    + "contains at least eight characters, a capital letter, "
+                    + "a number, and a special character.",
+                login.registerUser()
+        );
+    }
 }
