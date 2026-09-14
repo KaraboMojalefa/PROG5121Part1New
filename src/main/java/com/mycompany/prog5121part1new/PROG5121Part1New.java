@@ -27,5 +27,8 @@ public class PROG5121Part1New {
         
         System.out.println("Enter your last name: ");
         String lastName = input.nextLine();
+        
+        System.out.println("Enter you username: ");
+        String username = input.nextLine();
     }
 }
