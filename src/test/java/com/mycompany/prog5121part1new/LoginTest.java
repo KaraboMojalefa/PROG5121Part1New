@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class LoginTest {
     
+    //tests the username check
     @Test
     public void testCheckUserName() {
         
@@ -37,4 +38,28 @@ public class LoginTest {
         assertFalse(invalidLogin.checkUserName());
     }
     
+    //tests the password check
+    @Test
+    public void testCheckPasswordComplexity() {
+        
+        Login validLogin = new Login (
+        "Karabo",
+        "Mojalefa",
+        "kyl_1",
+        "Ch&&sec@ke99!",/*should pass because it has 8+ characters, a capital letter,
+                          a number, a special character*/
+        "+27697324722"
+        );
+        
+        Login invalidLogin = new Login (
+        "Karabo",
+        "Mojalefa",
+        "kyl_1",
+        "password",//should fail because it does not meet the complexity requirements
+        "+27697324722"
+        );
+        
+        assertTrue(validLogin.checkPasswordComplexity());
+        assertFalse(invalidLogin.checkPasswordComplexity());
+    }
 }
