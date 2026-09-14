@@ -62,4 +62,28 @@ public class LoginTest {
         assertTrue(validLogin.checkPasswordComplexity());
         assertFalse(invalidLogin.checkPasswordComplexity());
     }
+    
+    //tests the cell phone number check
+    @Test
+    public void testCheckCellPhoneNumber() {
+        
+        Login validLogin = new Login (
+        "Karabo",
+        "Mojalefa",
+        "kyl_1",
+        "Ch&&sec@ke99!",
+        "+27697324722"
+        );
+        
+        Login invalidLogin = new Login(
+        "Karabo",
+        "Mojalefa",
+        "kyl_1",
+        "Ch&&sec@ke99!",
+        "05896416"
+        );
+        
+        assertTrue(validLogin.checkCellPhoneNumber());
+        assertFalse(invalidLogin.checkCellPhoneNumber());
+    }
 }
