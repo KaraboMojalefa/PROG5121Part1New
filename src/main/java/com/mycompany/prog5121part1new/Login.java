@@ -16,7 +16,9 @@ public class Login {
     private String username;
     private String password;
     private String cellPhoneNumber;//it will contain the + international code
-
+    private String loginUsername;
+    private String loginPassword;
+    
     //constructor for the login details
     public Login(String firstName, String lastName, String username,
             String password, String cellPhoneNumber) {
@@ -94,5 +96,40 @@ public class Login {
         }
         
         return "Registration successful.";
+    }
+    
+    /*checks whether the username and password entered during 
+      login match the details stored during registration.
+    */
+    //chechs if the login details are correct
+    public boolean loginUser() {
+        
+        if (loginUsername.equals(username) //checks entered username & password 
+            && loginPassword.equals(password)) {//against registered ones
+            return true;//if both match
+        }
+        return false;//if either one is wrong
+    }
+    
+    //so that loginUser() does not compare empty values
+    /*this method stores the username and password entered when the user
+      tries to login.
+    */
+    public void setLoginDetails(String loginUsername, String loginPassword) {
+        
+        this.loginUsername = loginUsername;
+        this.loginPassword = loginPassword;
+    }
+    
+    /*this method returns the correct message depending on whether loginUser() 
+      is true or false.
+    */
+    public String returnLoginStatus() {
+        
+      if (loginUser()) {
+          return "Welcome " + firstName + ", " + lastName
+                  + " it is great to see you again.";
+      } 
+      return "Username or password incorrect, please try again.";
     }
 }
