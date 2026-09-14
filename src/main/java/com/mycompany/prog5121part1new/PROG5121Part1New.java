@@ -58,5 +58,8 @@ public class PROG5121Part1New {
         
         //we send the username & password typed by user into the setLoginDetails method
         login.setLoginDetails(loginUsername, loginPassword);
+        
+        //calls the method to check if the details are correct
+        System.out.println(login.returnLoginStatus());
     }
 }
