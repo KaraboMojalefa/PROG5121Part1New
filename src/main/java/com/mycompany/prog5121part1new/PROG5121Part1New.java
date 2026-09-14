@@ -33,5 +33,8 @@ public class PROG5121Part1New {
         
         System.out.println("Enter your password: ");
         String password = input.nextLine();
+        
+        System.out.println("Enter your cell phone number: ");
+        String cellPhoneNumber = input.nextLine();
     }
 }
