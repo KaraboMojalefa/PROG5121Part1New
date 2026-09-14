@@ -48,5 +48,9 @@ public class PROG5121Part1New {
         String registrationMessage = login.registerUser(); //calls the registerUser()
                                                            //from Login class
         System.out.println(registrationMessage);
+        
+        //after registration the program will ask:
+        System.out.println("Enter your username to login: ");
+        String loginUsername = input.nextLine();
     }
 }
