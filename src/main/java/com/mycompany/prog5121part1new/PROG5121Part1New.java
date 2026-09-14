@@ -52,5 +52,8 @@ public class PROG5121Part1New {
         //after registration the program will ask:
         System.out.println("Enter your username to login: ");
         String loginUsername = input.nextLine();
+        
+        System.out.println("Enter your password to login: ");
+        String loginPassword = input.nextLine();
     }
 }
