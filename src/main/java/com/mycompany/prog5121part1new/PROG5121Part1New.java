@@ -19,22 +19,22 @@ public class PROG5121Part1New {
        Scanner input = new Scanner(System.in);
        
         //shows the question to the user
-        System.out.println("Enter your name: ");
+        System.out.print("Enter your name: ");
         /*
         waits for the user to type their response and stores it in the variable
         */
         String firstName = input.nextLine();
         
-        System.out.println("Enter your last name: ");
+        System.out.print("Enter your last name: ");
         String lastName = input.nextLine();
         
-        System.out.println("Enter you username: ");
+        System.out.print("Enter your username: ");
         String username = input.nextLine();
         
-        System.out.println("Enter your password: ");
+        System.out.print("Enter your password: ");
         String password = input.nextLine();
         
-        System.out.println("Enter your cell phone number: ");
+        System.out.print("Enter your cell phone number: ");
         String cellPhoneNumber = input.nextLine();
         
         Login login = new Login ( //Login object
@@ -50,10 +50,10 @@ public class PROG5121Part1New {
         System.out.println(registrationMessage);
         
         //after registration the program will ask:
-        System.out.println("Enter your username to login: ");
+        System.out.print("Enter your username to login: ");
         String loginUsername = input.nextLine();
         
-        System.out.println("Enter your password to login: ");
+        System.out.print("Enter your password to login: ");
         String loginPassword = input.nextLine();
         
         //we send the username & password typed by user into the setLoginDetails method
@@ -61,5 +61,7 @@ public class PROG5121Part1New {
         
         //calls the method to check if the details are correct
         System.out.println(login.returnLoginStatus());
+        
+        input.close();
     }
 }
