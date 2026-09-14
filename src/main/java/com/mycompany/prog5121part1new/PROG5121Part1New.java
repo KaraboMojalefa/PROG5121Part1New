@@ -36,5 +36,13 @@ public class PROG5121Part1New {
         
         System.out.println("Enter your cell phone number: ");
         String cellPhoneNumber = input.nextLine();
+        
+        Login login = new Login ( //Login object
+        firstName,
+        lastName,
+        username,
+        password,
+        cellPhoneNumber
+        );
     }
 }
