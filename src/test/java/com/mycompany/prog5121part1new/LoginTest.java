@@ -135,4 +135,37 @@ public class LoginTest {
                 login.returnLoginStatus()
         );
     }
+    
+    //tests the registration check
+    @Test
+    public void testRegisterUser() {
+        
+        Login validLogin = new Login(
+        "Karabo",
+        "Mojalefa",
+        "kyl_1",
+        "Ch&&sec@ke99!",
+        "+27697324722"
+        );//checks if all registration details are valid
+        
+        assertEquals(
+            "Registration successful.",
+                validLogin.registerUser()
+        );
+        
+        Login invalidLogin = new Login (
+        "Karabo",
+        "Mojalefa",
+        "kyle!!!!!!!!!",
+        "password",
+        "05896416" 
+        );//this one gives invalid details, it should return a username error message
+        
+        assertEquals(
+            "Username is not correctly formatted; please ensure that your username "
+                    + "contains an underscore and is no more than five characters "
+                    + "in length.",
+                invalidLogin.registerUser()
+        );
+    }
 }
