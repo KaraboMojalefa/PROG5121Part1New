@@ -86,4 +86,26 @@ public class LoginTest {
         assertTrue(validLogin.checkCellPhoneNumber());
         assertFalse(invalidLogin.checkCellPhoneNumber());
     }
+    
+    //tests the login check
+    @Test
+    public void testLoginUser() {
+        
+        Login validLogin = new Login(
+        "Karabo",
+        "Mojalefa",
+        "kyl_1",
+        "Ch&&sec@ke99!",
+        "+27697324722"
+        );
+        
+        login.setLoginDetails("kyl_1", "Ch&&sec@ke99!"); //gives the login method the 
+                                                         //correct login details
+        
+        assertTrue(login.loginUser());
+        
+        login.setLoginDetails("wrong", "password");
+        
+        assertFalse(login.loginUser());
+    }
 }
