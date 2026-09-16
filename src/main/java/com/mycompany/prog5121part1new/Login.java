@@ -101,7 +101,7 @@ public class Login {
     /*checks whether the username and password entered during 
       login match the details stored during registration.
     */
-    //chechs if the login details are correct
+    //checks if the login details are correct
     public boolean loginUser() {
         
         if (loginUsername.equals(username) //checks entered username & password 
