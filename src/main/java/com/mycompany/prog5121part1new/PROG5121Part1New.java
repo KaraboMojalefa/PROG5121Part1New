@@ -51,7 +51,7 @@ public class PROG5121Part1New {
         System.out.print("Enter your password: ");
         String password = input.nextLine();
         
-        System.out.print("Enter your cell phone number: ");
+        System.out.print("Enter your cell phone number (+27...): ");
         String cellPhoneNumber = input.nextLine();
         
         Login login = new Login ( //Login object
@@ -101,7 +101,7 @@ public class PROG5121Part1New {
         } else {
             
             System.out.println();
-            System.out.println("Invalid option. Please choose 1 or 2.");
+            System.out.println("Invalid option. Please restart and choose 1 or 2.");
         }
 
         input.close();
