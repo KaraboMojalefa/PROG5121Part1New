@@ -66,7 +66,7 @@ public class Login {
     }
     
     //checks if the cell phone number is in the correct format
-    //Regex reference: Oracle Java Pattern documentation
+    // Regex reference: Oracle, Java Pattern documentation [1]
     public boolean checkCellPhoneNumber() {
         
         String regex = "^\\+27\\d{9}$";
