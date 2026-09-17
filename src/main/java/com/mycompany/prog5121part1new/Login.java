@@ -68,6 +68,12 @@ public class Login {
     
     //checks if the cell phone number is in the correct format
     // Regex reference: Oracle, Java Pattern documentation [1]
+    /*
+    [1] Oracle, “Pattern (Java SE 26 & JDK 26),” Oracle Java Documentation.
+    [Online]. Available:
+    https://docs.oracle.com/en/java/javase/26/docs/api/java.base/java/util/regex/Pattern.html.
+    [Accessed: Sep. 2026].
+    */
     public boolean checkCellPhoneNumber() {
         
         //must start with +27, followed by 9 digits (12 total numbers)
