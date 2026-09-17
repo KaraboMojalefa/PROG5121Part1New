@@ -40,7 +40,7 @@ public class ChatApp {
             //the registration will keep running until the details are correct
             while (!registered) { 
             
-            //shows the regidtration section
+            //shows the registration section
             System.out.println();
             System.out.println("--------- REGISTER ---------");
             System.out.println();
@@ -56,7 +56,7 @@ public class ChatApp {
         System.out.print("Enter your last name: ");
         String lastName = input.nextLine();
         
-        //gets the user's uername to check
+        //gets the user's username to check
         System.out.print("Enter your username: ");
         String username = input.nextLine();
         
@@ -92,7 +92,7 @@ public class ChatApp {
         System.out.print("Enter your password: ");
         String password = input.nextLine();
         
-        //creates a Login object to check the username
+        //creates a Login object to check the password
         Login passwordCheck = new Login(
             firstName,
             lastName,
@@ -111,7 +111,7 @@ public class ChatApp {
             System.out.println("characters, a capital letter, a number, and a special character.");
             System.out.println();
             System.out.println("Please try again.");
-            //starts the registration again if the username is incorrect
+            //starts the registration again if the password is incorrect
             continue;
         }
         
@@ -160,8 +160,9 @@ public class ChatApp {
         
         registered = true;
         
-        System.out.println();                                                   
-        System.out.println("Registration successful!");                                                   
+        System.out.println(); 
+        //uses registerUser to confirm that the registration was successful
+        System.out.println(login.registerUser());                                                   
       
                 System.out.println();
                 System.out.println("--------- LOGIN ---------");
