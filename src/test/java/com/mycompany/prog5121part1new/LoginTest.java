@@ -23,15 +23,15 @@ public class LoginTest {
         "Mojalefa",
         "kyl_1",//true
         "Ch&&sec@ke99!",
-        "+27697324722"
+        "+27838968976"
         );
         
         Login invalidLogin = new Login (
         "Karabo",
         "Mojalefa",
-        "kyle!!!!!!!!!",//false
+        "kyle!!!!!!!",//false
         "Ch&&sec@ke99!",
-        "+27697324722"
+        "+27838968976"
         );
         
         assertTrue(validLogin.checkUserName());
@@ -48,7 +48,7 @@ public class LoginTest {
         "kyl_1",
         "Ch&&sec@ke99!",/*should pass because it has 8+ characters, a capital letter,
                           a number, a special character*/
-        "+27697324722"
+        "+27838968976"
         );
         
         Login invalidLogin = new Login (
@@ -56,7 +56,7 @@ public class LoginTest {
         "Mojalefa",
         "kyl_1",
         "password",//should fail because it does not meet the complexity requirements
-        "+27697324722"
+        "+27838968976"
         );
         
         assertTrue(validLogin.checkPasswordComplexity());
@@ -72,7 +72,7 @@ public class LoginTest {
         "Mojalefa",
         "kyl_1",
         "Ch&&sec@ke99!",
-        "+27697324722"
+        "+27838968976"
         );
         
         Login invalidLogin = new Login(
@@ -80,7 +80,7 @@ public class LoginTest {
         "Mojalefa",
         "kyl_1",
         "Ch&&sec@ke99!",
-        "05896416"
+        "08966553"
         );
         
         assertTrue(validLogin.checkCellPhoneNumber());
@@ -96,7 +96,7 @@ public class LoginTest {
         "Mojalefa",
         "kyl_1",
         "Ch&&sec@ke99!",
-        "+27697324722"
+        "+27838968976"
         );
         
         login.setLoginDetails("kyl_1", "Ch&&sec@ke99!"); //gives the login method the 
@@ -118,7 +118,7 @@ public class LoginTest {
         "Mojalefa",
         "kyl_1",
         "Ch&&sec@ke99!",
-        "+27697324722"
+        "+27838968976"
         );
         
         login.setLoginDetails("kyl_1", "Ch&&sec@ke99!");
@@ -145,7 +145,7 @@ public class LoginTest {
         "Mojalefa",
         "kyl_1",
         "Ch&&sec@ke99!",
-        "+27697324722"
+        "+27838968976"
         );//checks if all registration details are valid
         
         assertEquals(
@@ -156,9 +156,9 @@ public class LoginTest {
         Login invalidLogin = new Login (
         "Karabo",
         "Mojalefa",
-        "kyle!!!!!!!!!",
+        "kyle!!!!!!!",
         "password",
-        "05896416" 
+        "08966553" 
         );//this one gives invalid details, it should return a username error message
         
         assertEquals(
@@ -178,7 +178,7 @@ public class LoginTest {
         "Mojalefa",
         "kyl_1",
         "password",
-        "+27697324722"        
+        "+27838968976"        
         );//the password fails, so we expect the password error message
         
         assertEquals(
@@ -189,7 +189,7 @@ public class LoginTest {
         );
     }
     
-    //test the cell phone error message
+    //tests the cell phone error message
     @Test
     public void testInvalidCellPhoneRegistration() {
         
@@ -198,12 +198,12 @@ public class LoginTest {
         "Mojalefa",
         "kyl_1",
         "Ch&&sec@ke99!",
-        "05896416"//the phone number will fail
+        "08966553"//the phone number will fail
         );
         
         assertEquals(
             "Cell phone number incorrectly formatted or does not contain "
-                    + "international code", login.registerUser()
+                    + "international code.", login.registerUser()
         );
     }
 }
