@@ -43,7 +43,8 @@ public class Login {
         boolean hasNumber = false;
         boolean hasSpecial = false;
         
-        //loops through every character in the password
+        //loops through every character in the password, then checks capital letter, number
+        //special character, minimum 8 characters
         for (int i = 0; i < password.length(); i++) {
             char character = password.charAt(i);
             
@@ -69,6 +70,7 @@ public class Login {
     // Regex reference: Oracle, Java Pattern documentation [1]
     public boolean checkCellPhoneNumber() {
         
+        //must start with +27, followed by 9 digits (12 total numbers)
         String regex = "^\\+27\\d{9}$";
         //^ - starts at the beginning
         //\\+27 - must start with +27
