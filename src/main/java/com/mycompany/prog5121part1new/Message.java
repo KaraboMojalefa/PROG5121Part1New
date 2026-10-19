@@ -48,7 +48,8 @@ public class Message {
                 + "Please correct the number and try again.";
     }
 
-    public String createMessageHash() {
+        // Put the message ID, number and words together
+        public String createMessageHash() {
         String firstTwo = messageID.substring(0, 2);
         String firstWord = "";
         String lastWord = "";
@@ -57,8 +58,15 @@ public class Message {
 
         if (!trimmed.isEmpty()) {
             String[] words = trimmed.split("\\s+");
+            
+            // Get the first and last words
             firstWord = words[0];
             lastWord = words[words.length - 1];
+            
+            // Remove punctuation from those words
+            firstWord = firstWord.replaceAll("[^a-zA-Z0-9]", "");
+            lastWord = lastWord.replaceAll("[^a-zA-Z0-9]", "");
+            
         }
 
         return (firstTwo + ":" + messageNumber + ":"
