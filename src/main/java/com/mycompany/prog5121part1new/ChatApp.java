@@ -185,7 +185,7 @@ public class ChatApp {
                 // Open QuickChat only after a successful login
                 if (login.loginUser()) {
                     System.out.println("Welcome to QuickChat.");
-                        quickChatMenu(scanner);
+                        quickChatMenu(input);
                 }
             }      
         } else if (option == 2) {
