@@ -64,7 +64,20 @@ public class Message {
         return (firstTwo + ":" + messageNumber + ":"
                 + firstWord + lastWord).toUpperCase();
     }
+    
+    // Check if the message is short enough
+    public String checkMessageLength() {
+        if (message.length() <= 250) {
+            return "Message ready to send.";
+        }
 
+        int extraCharacters = message.length() - 250;
+
+        return "Message exceeds 250 characters by "
+                + extraCharacters
+                + "; please reduce the size.";
+    }
+    
     public String SentMessage(int choice) {
         if (choice == 1) {
             return "Message successfully sent.";
