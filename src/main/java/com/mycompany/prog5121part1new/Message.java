@@ -9,7 +9,9 @@ package com.mycompany.prog5121part1new;
  * @author Student
  */
 
-import java.util.Random;        
+import java.util.Random;  
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Message {
      
@@ -142,5 +144,33 @@ public class Message {
 
     public String getMessage() {
         return message;
+    }
+    
+    // Save the message details in a JSON file
+    public String storeMessage() {
+        try (FileWriter writer = new FileWriter("messages.json", true)) {
+
+            // Write the message as a JSON object
+            writer.write("{");
+            writer.write("\"messageID\":\"" + messageID + "\",");
+            writer.write("\"messageHash\":\"" + messageHash + "\",");
+            writer.write("\"recipient\":\"" + recipient + "\",");
+            writer.write("\"message\":\"" + escapeJson(message) + "\"");
+            writer.write("}");
+            writer.write(System.lineSeparator());
+
+            return "Message successfully stored.";
+
+        } catch (IOException e) {
+            return "Message could not be stored.";
+        }
+    }
+
+    // Fix characters that could break the JSON format
+    private String escapeJson(String text) {
+        return text.replace("\\", "\\\\")
+                .replace("\"", "\\\"")
+                .replace("\n", "\\n")
+                .replace("\r", "\\r");
     }
 }
