@@ -12,6 +12,9 @@ package com.mycompany.prog5121part1new;
 import java.util.Random;  
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.charset.StandardCharsets;
 
 public class Message {
      
@@ -126,7 +129,7 @@ public class Message {
     }
 
     // Show all the messages sent so far
-    public String printAllSentMessages() {
+    public static String printAllSentMessages() {
         return sentMessages.toString();
     }
     
@@ -148,16 +151,41 @@ public class Message {
     
     // Save the message details in a JSON file
     public String storeMessage() {
-        try (FileWriter writer = new FileWriter("messages.json", true)) {
+        String fileName = "messages.json";
+        String oldData = "[]";
 
-            // Write the message as a JSON object
-            writer.write("{");
-            writer.write("\"messageID\":\"" + messageID + "\",");
-            writer.write("\"messageHash\":\"" + messageHash + "\",");
-            writer.write("\"recipient\":\"" + recipient + "\",");
-            writer.write("\"message\":\"" + escapeJson(message) + "\"");
-            writer.write("}");
-            writer.write(System.lineSeparator());
+        try {
+            // Read the messages already saved
+            if (Files.exists(Paths.get(fileName))) {
+                String savedData = Files.readString(
+                        Paths.get(fileName),
+                        StandardCharsets.UTF_8
+                ).trim();
+
+                // Keep the old data if it is a JSON array
+                if (savedData.startsWith("[") && savedData.endsWith("]")) {
+                    oldData = savedData;
+                }
+            }
+
+            // Remove the closing bracket before adding a message
+            String content = oldData.substring(0, oldData.length() - 1);
+
+            if (!content.trim().equals("[")) {
+                content += ",";
+            }
+
+            content += "{"
+                    + "\"messageID\":\"" + escapeJson(messageID) + "\","
+                    + "\"messageHash\":\"" + escapeJson(messageHash) + "\","
+                    + "\"recipient\":\"" + escapeJson(recipient) + "\","
+                    + "\"message\":\"" + escapeJson(message) + "\""
+                    + "}]";
+
+            // Save all messages as one JSON array
+            try (FileWriter writer = new FileWriter(fileName, false)) {
+                writer.write(content);
+            }
 
             return "Message successfully stored.";
 
