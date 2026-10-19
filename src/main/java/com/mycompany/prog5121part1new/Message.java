@@ -18,6 +18,12 @@ public class Message {
     private String recipient;
     private String message;
     private String messageHash;
+    
+    // Keep track of the messages sent in this run
+    private static int totalMessagesSent = 0;
+
+    // Keep the messages that were sent
+    private static StringBuilder sentMessages = new StringBuilder();
 
     public Message(int messageNumber, String recipient, String message) {
         this.messageNumber = messageNumber;
@@ -104,11 +110,24 @@ public class Message {
                 + "\nRecipient: " + recipient
                 + "\nMessage: " + message;
     }
-
+    
+    
+    // Return how many messageshave been sent
     public int returnTotalMessagess() {
-        return messageNumber;
+        return totalMessagesSent;
+    }
+    
+    // Add a message to the sent list and increase the count
+    public void addSentMessage() {
+        sentMessages.append(printMessages()).append("\n\n");
+        totalMessagesSent++;
     }
 
+    // Show all the messages sent so far
+    public String printAllSentMessages() {
+        return sentMessages.toString();
+    }
+    
     public String getMessageID() {
         return messageID;
     }
