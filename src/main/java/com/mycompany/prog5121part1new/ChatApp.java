@@ -213,19 +213,21 @@ public class ChatApp {
             System.out.println("2. Show recently sent messages");
             System.out.println("3. Quit");
             System.out.print("Choose an option: ");
-
+            
+            // Make sure the user enters a number
             if (!scanner.hasNextInt()) {
                 System.out.println("Please enter a number.");
                 scanner.nextLine();
                 continue;
             }
-
+            
             choice = scanner.nextInt();
             scanner.nextLine();
 
             if (choice == 1) {
                 System.out.print("How many messages do you want to send? ");
 
+                // Check that the user enters a number
                 if (!scanner.hasNextInt()) {
                     System.out.println("Please enter a number.");
                     scanner.nextLine();
@@ -262,10 +264,17 @@ public class ChatApp {
                     System.out.println("2. Disregard Message");
                     System.out.println("3. Store Message");
                     System.out.print("Choose an option: ");
+                    
+                    // Check that the user enters a number
+                    if (!scanner.hasNextInt()) {
+                        System.out.println("Please enter a number.");
+                        scanner.nextLine();
+                        continue;
+                    }
 
                     int messageChoice = scanner.nextInt();
                     scanner.nextLine();
-
+                    
                     if (messageChoice == 1) {
                         System.out.println(message.SentMessage(1));
                         message.addSentMessage();
@@ -287,7 +296,13 @@ public class ChatApp {
                 }
 
             } else if (choice == 2) {
-                System.out.println("Coming Soon.");
+                String messages = Message.printAllSentMessages();
+                
+                if (messages.isEmpty()) {
+                    System.out.println("No messages have been sent yet.");
+                } else {
+                    System.out.println(messages);
+                }
             } else if (choice == 3) {
                 System.out.println("Goodbye!");
             } else {
