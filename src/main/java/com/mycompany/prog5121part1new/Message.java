@@ -1,0 +1,106 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.prog5121part1new;
+
+/**
+ *
+ * @author Student
+ */
+
+import java.util.Random;        
+
+public class Message {
+     
+    private String messageID;
+    private int messageNumber;
+    private String recipient;
+    private String message;
+    private String messageHash;
+
+    public Message(int messageNumber, String recipient, String message) {
+        this.messageNumber = messageNumber;
+        this.recipient = recipient;
+        this.message = message;
+
+        // Create a random ten-digit message ID
+        Random random = new Random();
+        long id = 1000000000L + random.nextInt(900000000);
+        messageID = String.valueOf(id);
+
+        // Create the message hash
+        messageHash = createMessageHash();
+    }
+
+    public boolean checkMessageID() {
+        return messageID.length() <= 10;
+    }
+
+    public String checkRecipientCell() {
+        if (recipient.matches("^\\+\\d{1,3}\\d{1,9}$")
+                && recipient.length() <= 13) {
+            return "Cell phone number successfully captured.";
+        }
+
+        return "Cell phone number is incorrectly formatted or "
+                + "does not contain an international code. "
+                + "Please correct the number and try again.";
+    }
+
+    public String createMessageHash() {
+        String firstTwo = messageID.substring(0, 2);
+        String firstWord = "";
+        String lastWord = "";
+
+        String trimmed = message.trim();
+
+        if (!trimmed.isEmpty()) {
+            String[] words = trimmed.split("\\s+");
+            firstWord = words[0];
+            lastWord = words[words.length - 1];
+        }
+
+        return (firstTwo + ":" + messageNumber + ":"
+                + firstWord + lastWord).toUpperCase();
+    }
+
+    public String SentMessage(int choice) {
+        if (choice == 1) {
+            return "Message successfully sent.";
+        } else if (choice == 2) {
+            return "Press 0 to delete the message.";
+        } else if (choice == 3) {
+            return "Message successfully stored.";
+        }
+
+        return "Invalid option.";
+    }
+
+    public String printMessages() {
+        return "Message ID: " + messageID
+                + "\nMessage Hash: " + messageHash
+                + "\nRecipient: " + recipient
+                + "\nMessage: " + message;
+    }
+
+    public int returnTotalMessagess() {
+        return messageNumber;
+    }
+
+    public String getMessageID() {
+        return messageID;
+    }
+
+    public String getMessageHash() {
+        return messageHash;
+    }
+
+    public String getRecipient() {
+        return recipient;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+}
