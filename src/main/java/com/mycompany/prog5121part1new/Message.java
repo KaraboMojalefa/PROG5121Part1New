@@ -45,7 +45,7 @@ public class Message {
     }
 
     public boolean checkMessageID() {
-        return messageID.length() <= 10;
+        return messageID.matches("\\d{10}");
     }
 
     public String checkRecipientCell() {
