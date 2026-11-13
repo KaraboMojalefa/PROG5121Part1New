@@ -10,6 +10,7 @@ package com.mycompany.prog5121part1new;
  */
 
 import java.util.Random;  
+import java.util.Arrays;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -27,8 +28,14 @@ public class Message {
     // Keep track of the messages sent in this run
     private static int totalMessagesSent = 0;
 
-    // Keep the messages that were sent
-    private static StringBuilder sentMessages = new StringBuilder();
+    // Dynamic arrays for the different message categories
+    private static Message[] sentMessages = new Message[0];
+    private static Message[] disregardedMessages = new Message[0];
+    private static Message[] storedMessages = new Message[0];
+
+    // Dynamic arrays for message IDs and hashes
+    private static String[] messageIDs = new String[0];
+    private static String[] messageHashes = new String[0];
 
     public Message(int messageNumber, String recipient, String message) {
         this.messageNumber = messageNumber;
@@ -123,16 +130,65 @@ public class Message {
     }
     
     // Add a message to the sent list and increase the count
+   // Add a message to the sent messages array
     public void addSentMessage() {
-        sentMessages.append(printMessages()).append("\n\n");
+
+        // Add the complete message object to the dynamic array
+        sentMessages = addMessageToArray(sentMessages, this);
+
+        // Save the message ID and hash in their own arrays
+        messageIDs = addStringToArray(messageIDs, messageID);
+        messageHashes = addStringToArray(messageHashes, messageHash);
+
+        // Increase the total number of sent messages
         totalMessagesSent++;
+    }
+    
+    // Add a message to the disregarded messages array
+    public void addDisregardedMessage() {
+
+        disregardedMessages = addMessageToArray(
+                disregardedMessages, this);
     }
 
     // Show all the messages sent so far
+    // Display all messages in the sent messages array
     public static String printAllSentMessages() {
-        return sentMessages.toString();
+
+        StringBuilder output = new StringBuilder();
+
+        for (Message sentMessage : sentMessages) {
+            output.append(sentMessage.printMessages())
+                    .append("\n\n");
+        }
+
+        return output.toString();
     }
     
+        // Add a message to an array by expanding the array
+    private static Message[] addMessageToArray(
+            Message[] oldArray, Message newMessage) {
+
+        Message[] newArray = Arrays.copyOf(
+                oldArray, oldArray.length + 1);
+
+        newArray[newArray.length - 1] = newMessage;
+
+        return newArray;
+    }
+
+    // Add a string to an array by expanding the array
+    private static String[] addStringToArray(
+            String[] oldArray, String newString) {
+
+        String[] newArray = Arrays.copyOf(
+                oldArray, oldArray.length + 1);
+
+        newArray[newArray.length - 1] = newString;
+
+        return newArray;
+    }
+
     public String getMessageID() {
         return messageID;
     }
@@ -187,7 +243,10 @@ public class Message {
                 writer.write(content);
             }
 
-            return "Message successfully stored.";
+            // Add the successfully stored message to the array
+            storedMessages = addMessageToArray(storedMessages, this);
+
+return "Message successfully stored.";
 
         } catch (IOException e) {
             return "Message could not be stored.";
