@@ -348,6 +348,39 @@ public class Message {
         // Display this if no matching ID is found
         return "Message ID not found.";
     }
+    
+    // Search for all stored messages belonging to a recipient
+    public static String searchStoredMessagesByRecipient(String searchRecipient) {
+
+        StringBuilder output = new StringBuilder();
+
+        boolean found = false;
+
+        // Search through all stored messages
+        for (Message storedMessage : storedMessages) {
+
+            if (storedMessage.getRecipient().equals(searchRecipient)) {
+
+                output.append("Message ID: ")
+                        .append(storedMessage.getMessageID())
+                        .append("\nSender: ")
+                        .append(storedMessage.getSender())
+                        .append("\nRecipient: ")
+                        .append(storedMessage.getRecipient())
+                        .append("\nMessage: ")
+                        .append(storedMessage.getMessage())
+                        .append("\n\n");
+
+                found = true;
+            }
+        }
+
+        if (!found) {
+            return "No messages found for this recipient.";
+        }
+
+        return output.toString();
+    }
 
     // Save the message details in a JSON file
     public String storeMessage() {
