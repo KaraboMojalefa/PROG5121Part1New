@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.charset.StandardCharsets;
+import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
 
 public class Message {
      
@@ -205,6 +207,50 @@ public class Message {
 
     public String getMessage() {
         return message;
+    }
+    
+    // Load previously stored messages from the JSON file
+    public static void loadStoredMessages() {
+
+        String fileName = "messages.json";
+
+        // Check whether the JSON file exists
+        if (!Files.exists(Paths.get(fileName))) {
+            return;
+        }
+
+        try (java.io.Reader reader = Files.newBufferedReader(
+                Paths.get(fileName), StandardCharsets.UTF_8)) {
+
+            // Use Gson to convert JSON data into Message objects
+            Gson gson = new Gson();
+
+            Message[] loadedMessages = gson.fromJson(
+                    reader, Message[].class);
+
+            // Restore the stored messages array
+            if (loadedMessages == null) {
+                storedMessages = new Message[0];
+            } else {
+                storedMessages = loadedMessages;
+            }
+
+            // Restore the message IDs and hashes
+            messageIDs = new String[0];
+            messageHashes = new String[0];
+
+            for (Message storedMessage : storedMessages) {
+                messageIDs = addStringToArray(
+                        messageIDs, storedMessage.getMessageID());
+
+                messageHashes = addStringToArray(
+                        messageHashes, storedMessage.getMessageHash());
+            }
+
+        } catch (IOException | JsonParseException e) {
+            System.out.println("Could not load stored messages: "
+                    + e.getMessage());
+        }
     }
     
     // Save the message details in a JSON file
