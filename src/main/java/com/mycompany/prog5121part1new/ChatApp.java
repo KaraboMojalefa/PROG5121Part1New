@@ -187,7 +187,7 @@ public class ChatApp {
                 // Open QuickChat only after a successful login
                 if (login.loginUser()) {
                     System.out.println("Welcome to QuickChat.");
-                        quickChatMenu(input);
+                        quickChatMenu(input, login.getFullName());
                 }
             }      
         } else if (option == 2) {
@@ -207,7 +207,7 @@ public class ChatApp {
     }
     
     // Show the menu and keep going until the user quits
-    public static void quickChatMenu(Scanner scanner) {
+    public static void quickChatMenu(Scanner scanner, String sender) {
         int choice = 0;
 
         while (choice != 3) {
