@@ -381,6 +381,58 @@ public class Message {
 
         return output.toString();
     }
+    
+    // Delete a stored message using its Message Hash
+    public static String deleteStoredMessageByHash(String searchHash) {
+
+        boolean found = false;
+
+        // Create a temporary array for the remaining messages
+        Message[] updatedMessages = new Message[0];
+
+        // Search through all stored messages
+        for (Message storedMessage : storedMessages) {
+
+            if (!found && storedMessage.getMessageHash().equals(searchHash)) {
+
+                // Skip the message that must be deleted
+                found = true;
+
+            } else {
+
+                // Keep all messages that are not being deleted
+                updatedMessages = addMessageToArray(
+                        updatedMessages, storedMessage);
+            }
+        }
+
+        // Check whether a matching message was found
+        if (!found) {
+            return "Message hash not found.";
+        }
+
+        try {
+            // Use Gson to rewrite the updated JSON file
+            Gson gson = new Gson();
+
+            String jsonData = gson.toJson(updatedMessages);
+
+            Files.writeString(
+                    Paths.get("messages.json"),
+                    jsonData,
+                    StandardCharsets.UTF_8
+            );
+
+            // Update the stored messages array
+            storedMessages = updatedMessages;
+
+            return "Stored message successfully deleted.";
+
+        } catch (IOException e) {
+
+            return "Message could not be deleted.";
+        }
+    }
 
     // Save the message details in a JSON file
     public String storeMessage() {
