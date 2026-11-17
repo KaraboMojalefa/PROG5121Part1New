@@ -247,7 +247,7 @@ public class ChatApp {
                     System.out.print("Enter your message: ");
                     String messageText = scanner.nextLine();
 
-                    Message message = new Message(i, recipient, messageText);
+                    Message message = new Message(i, sender, recipient, messageText);
 
                     System.out.println(message.checkMessageLength());
 
