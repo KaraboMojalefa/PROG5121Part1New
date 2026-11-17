@@ -433,6 +433,55 @@ public class Message {
             return "Message could not be deleted.";
         }
     }
+    
+    // Generate a full report of all stored messages
+    public static String displayFullStoredMessageReport() {
+
+        StringBuilder report = new StringBuilder();
+
+        // Check whether stored messages exist
+        if (storedMessages.length == 0) {
+            return "No stored messages found.";
+        }
+
+        report.append("FULL STORED MESSAGES REPORT\n");
+        report.append("===========================\n\n");
+
+        // Display the details of every stored message
+        for (int i = 0; i < storedMessages.length; i++) {
+
+            Message storedMessage = storedMessages[i];
+
+            report.append("Message ")
+                    .append(i + 1)
+                    .append("\n");
+
+            report.append("Sender: ")
+                    .append(storedMessage.getSender())
+                    .append("\n");
+
+            report.append("Recipient: ")
+                    .append(storedMessage.getRecipient())
+                    .append("\n");
+
+            report.append("Message ID: ")
+                    .append(storedMessage.getMessageID())
+                    .append("\n");
+
+            report.append("Message Hash: ")
+                    .append(storedMessage.getMessageHash())
+                    .append("\n");
+
+            report.append("Message: ")
+                    .append(storedMessage.getMessage())
+                    .append("\n\n");
+        }
+
+        report.append("Total Stored Messages: ")
+                .append(storedMessages.length);
+
+        return report.toString();
+    }
 
     // Save the message details in a JSON file
     public String storeMessage() {
