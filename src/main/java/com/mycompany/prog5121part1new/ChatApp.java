@@ -17,6 +17,8 @@ public class ChatApp {
 
     public static void main(String[] args) {
        Scanner input = new Scanner(System.in);
+       // Load previously stored messageswhen th eapplication starts
+       Message.loadStoredMessages();
        
         System.out.println("==============================");
         System.out.println("          CHAT APP");
