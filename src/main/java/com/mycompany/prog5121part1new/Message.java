@@ -131,17 +131,19 @@ public class Message {
     
     // Add a message to the sent list and increase the count
    // Add a message to the sent messages array
-    public void addSentMessage() {
+   public void addSentMessage() {
 
         // Add the complete message object to the dynamic array
         sentMessages = addMessageToArray(sentMessages, this);
-
-        // Save the message ID and hash in their own arrays
-        messageIDs = addStringToArray(messageIDs, messageID);
-        messageHashes = addStringToArray(messageHashes, messageHash);
-
         // Increase the total number of sent messages
         totalMessagesSent++;
+    }// End of addSentMessage()
+   
+   // Record the ID and hash of every message
+    public void addMessageDetails() {
+
+        messageIDs = addStringToArray(messageIDs, messageID);
+        messageHashes = addStringToArray(messageHashes, messageHash);
     }
     
     // Add a message to the disregarded messages array
@@ -246,7 +248,10 @@ public class Message {
             // Add the successfully stored message to the array
             storedMessages = addMessageToArray(storedMessages, this);
 
-return "Message successfully stored.";
+            // Add the successfully stored message to the array
+            storedMessages = addMessageToArray(storedMessages, this);
+
+            return "Message successfully stored.";
 
         } catch (IOException e) {
             return "Message could not be stored.";
