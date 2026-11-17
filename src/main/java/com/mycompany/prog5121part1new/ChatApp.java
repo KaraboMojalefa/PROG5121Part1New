@@ -287,6 +287,7 @@ public class ChatApp {
                         System.out.println(message.printMessages());
                     } else if (messageChoice == 2) {
                         System.out.println(message.SentMessage(2));
+                        message.addDisregardedMessage();
                     } else if (messageChoice == 3) {
                         System.out.println(message.storeMessage());
                     } else {
