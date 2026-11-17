@@ -272,6 +272,31 @@ public class Message {
         }
     }
     
+    // Display the sender and recipient of all stored messages
+    public static String displayStoredSendersAndRecipients() {
+
+        StringBuilder output = new StringBuilder();
+
+        // Check whether there are any stored messages
+        if (storedMessages.length == 0) {
+            return "No stored messages found.";
+        }
+
+        // Display the sender and recipient of each stored message
+        for (Message storedMessage : storedMessages) {
+
+            output.append("Sender: ")
+                    .append(storedMessage.getSender())
+                    .append("\n");
+
+            output.append("Recipient: ")
+                    .append(storedMessage.getRecipient())
+                    .append("\n\n");
+        }
+
+        return output.toString();
+    }
+    
     // Save the message details in a JSON file
     public String storeMessage() {
         String fileName = "messages.json";
