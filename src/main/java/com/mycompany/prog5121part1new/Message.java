@@ -297,6 +297,33 @@ public class Message {
         return output.toString();
     }
     
+    // Find and display the longest stored message
+    public static String displayLongestStoredMessage() {
+
+        // Check whether there are stored messages
+        if (storedMessages.length == 0) {
+            return "No stored messages found.";
+        }
+
+        Message longestMessage = storedMessages[0];
+
+        // Compare the length of each stored message
+        for (Message storedMessage : storedMessages) {
+
+            if (storedMessage.getMessage().length()
+                    > longestMessage.getMessage().length()) {
+
+                longestMessage = storedMessage;
+            }
+        }
+
+        return "Longest Stored Message:\n"
+                + longestMessage.printMessages()
+                + "\nMessage Length: "
+                + longestMessage.getMessage().length()
+                + " characters.";
+    }
+    
     // Save the message details in a JSON file
     public String storeMessage() {
         String fileName = "messages.json";
