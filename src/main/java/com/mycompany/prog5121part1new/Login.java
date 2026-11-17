@@ -140,4 +140,8 @@ public class Login {
       } 
       return "Username or password incorrect, please try again.";
     }
+    // Return the full name of the logged-in user
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
 }
