@@ -211,7 +211,12 @@ public class Message {
         return messageHash;
     }
     
+    // Return the sender's name, or Unknown for older stored messages
     public String getSender() {
+        if (sender == null || sender.trim().isEmpty()) {
+            return "Unknown";
+        }
+
         return sender;
     }
     
