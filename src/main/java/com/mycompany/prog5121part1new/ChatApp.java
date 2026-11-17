@@ -275,6 +275,12 @@ public class ChatApp {
                     int messageChoice = scanner.nextInt();
                     scanner.nextLine();
                     
+                    // Record the ID and hash for every message
+                    if (messageChoice == 1 || messageChoice == 2
+                            || messageChoice == 3) {
+                        message.addMessageDetails();
+                    }
+                    
                     if (messageChoice == 1) {
                         System.out.println(message.SentMessage(1));
                         message.addSentMessage();
