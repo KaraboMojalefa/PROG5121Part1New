@@ -248,9 +248,6 @@ public class Message {
             // Add the successfully stored message to the array
             storedMessages = addMessageToArray(storedMessages, this);
 
-            // Add the successfully stored message to the array
-            storedMessages = addMessageToArray(storedMessages, this);
-
             return "Message successfully stored.";
 
         } catch (IOException e) {
