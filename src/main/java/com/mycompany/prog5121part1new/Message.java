@@ -324,6 +324,31 @@ public class Message {
                 + " characters.";
     }
     
+    // Search for a stored message using its Message ID
+    public static String searchStoredMessageByID(String searchID) {
+
+        // Check whether stored messages exist
+        if (storedMessages.length == 0) {
+            return "No stored messages found.";
+        }
+
+        // Search through all stored messages
+        for (Message storedMessage : storedMessages) {
+
+            if (storedMessage.getMessageID().equals(searchID)) {
+
+                return "Message found!\n"
+                        + "Recipient: "
+                        + storedMessage.getRecipient()
+                        + "\nMessage: "
+                        + storedMessage.getMessage();
+            }
+        }
+
+        // Display this if no matching ID is found
+        return "Message ID not found.";
+    }
+
     // Save the message details in a JSON file
     public String storeMessage() {
         String fileName = "messages.json";
