@@ -23,7 +23,8 @@ public class Message {
      
     private String messageID;
     private int messageNumber;
-    private String recipient;
+    private String sender;
+    private String recipient;   
     private String message;
     private String messageHash;
     
@@ -39,8 +40,17 @@ public class Message {
     private static String[] messageIDs = new String[0];
     private static String[] messageHashes = new String[0];
 
+    // Existing constructor, retained for compatibility with current tests
     public Message(int messageNumber, String recipient, String message) {
+        this(messageNumber, "Unknown", recipient, message);
+    }
+
+    // Constructor that records the sender of the message
+    public Message(int messageNumber, String sender,
+            String recipient, String message) {
+
         this.messageNumber = messageNumber;
+        this.sender = sender;
         this.recipient = recipient;
         this.message = message;
 
@@ -52,7 +62,7 @@ public class Message {
         // Create the message hash
         messageHash = createMessageHash();
     }
-
+    
     public boolean checkMessageID() {
         return messageID.matches("\\d{10}");
     }
@@ -200,7 +210,11 @@ public class Message {
     public String getMessageHash() {
         return messageHash;
     }
-
+    
+    public String getSender() {
+        return sender;
+    }
+    
     public String getRecipient() {
         return recipient;
     }
