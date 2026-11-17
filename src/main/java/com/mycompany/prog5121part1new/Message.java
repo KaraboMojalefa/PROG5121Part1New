@@ -294,6 +294,7 @@ public class Message {
             }
 
             content += "{"
+                    + "\"sender\":\"" + escapeJson(sender) + "\","
                     + "\"messageID\":\"" + escapeJson(messageID) + "\","
                     + "\"messageHash\":\"" + escapeJson(messageHash) + "\","
                     + "\"recipient\":\"" + escapeJson(recipient) + "\","
