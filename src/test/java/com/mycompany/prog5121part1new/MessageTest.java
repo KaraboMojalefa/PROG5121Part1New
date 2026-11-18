@@ -118,4 +118,17 @@ public class MessageTest {
             assertTrue(hash.matches("\\d{2}:" + i + ":HELLOWORLD"));
         }
     }
+    
+    @Test
+    public void testMessageSender() {
+
+        // Create a message with a sender name
+        Message msg = new Message(
+                1, "Mojalefa", "+27834557896",
+                "Testing sender details");
+
+        // Check that the sender and recipient are correct
+        assertEquals("Mojalefa", msg.getSender());
+        assertEquals("+27834557896", msg.getRecipient());
+    }
 }
