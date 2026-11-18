@@ -244,27 +244,41 @@ public class ChatApp {
                 // Sends only the number of messages chosen
                 for (int i = 0; i < numberOfMessages; i++) {
 
-                    System.out.print("Enter recipient cell number: ");
-                    String recipient = scanner.nextLine();
+                    String recipient;
+                    String messageText;
+                    Message message;
 
-                    System.out.print("Enter your message: ");
-                    String messageText = scanner.nextLine();
+                    // Keep asking until both the recipient and message are valid
+                    while (true) {
 
-                    Message message = new Message(
-                            i, sender, recipient, messageText
-                    );
+                        System.out.print("Enter recipient cell number: ");
+                        recipient = scanner.nextLine();
 
-                    System.out.println(message.checkMessageLength());
+                        System.out.print("Enter your message: ");
+                        messageText = scanner.nextLine();
 
-                    if (messageText.length() > 250) {
-                        continue;
-                    }
+                        // Check the message length
+                        if (messageText.length() > 250) {
+                            System.out.println("Please enter a message of 250 characters or less.");
+                            System.out.println("Try again.\n");
+                            continue;
+                        }
 
-                    System.out.println(message.checkRecipientCell());
+                        // Create the message and check the recipient number
+                        message = new Message(i, sender, recipient, messageText);
 
-                    if (!message.checkRecipientCell().equals(
-                            "Cell phone number successfully captured.")) {
-                        continue;
+                        String recipientStatus = message.checkRecipientCell();
+
+                        System.out.println(recipientStatus);
+
+                        if (!recipientStatus.equals(
+                                "Cell phone number successfully captured.")) {
+                            System.out.println("Please enter the details again.\n");
+                            continue;
+                        }
+
+                        // Both checks passed, so leave the retry loop
+                        break;
                     }
 
                     System.out.println("1. Send Message");
