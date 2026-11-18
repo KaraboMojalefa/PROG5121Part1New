@@ -142,4 +142,13 @@ public class MessageTest {
         // Older messages should display Unknown as the sender
         assertEquals("Unknown", msg.getSender());
     }
+    
+    @Test
+    public void testDisplayStoredMessagesWhenEmpty() {
+
+        // Check the response when there are no stored messages
+        assertEquals(
+                "No stored messages found.",
+                Message.displayStoredSendersAndRecipients());
+    }
 }
