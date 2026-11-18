@@ -141,8 +141,8 @@ public class Message {
     }
     
     
-    // Return how many messageshave been sent
-    public int returnTotalMessagess() {
+    // Returns the total number of messages sent
+    public static int returnTotalMessages() {
         return totalMessagesSent;
     }
     
