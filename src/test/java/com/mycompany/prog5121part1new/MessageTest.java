@@ -102,4 +102,20 @@ public class MessageTest {
         assertEquals("Message successfully stored.",
                 msg.SentMessage(3));
     }
+    
+    @Test
+    public void testMessageHashLoop() {
+
+        // Create several messages and check their hashes
+        for (int i = 0; i < 5; i++) {
+
+            Message msg = new Message(
+                    i, "+27718693002", "Hello world");
+
+            String hash = msg.getMessageHash();
+
+            // Check that every hash follows the correct format
+            assertTrue(hash.matches("\\d{2}:" + i + ":HELLOWORLD"));
+        }
+    }
 }
