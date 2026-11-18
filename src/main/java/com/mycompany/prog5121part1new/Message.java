@@ -430,6 +430,18 @@ public class Message {
 
             // Update the stored messages array
             storedMessages = updatedMessages;
+            
+            // Rebuild the message ID and hash arrays
+            messageIDs = new String[0];
+            messageHashes = new String[0];
+
+            for (Message storedMessage : storedMessages) {
+                messageIDs = addStringToArray(
+                        messageIDs, storedMessage.getMessageID());
+
+                messageHashes = addStringToArray(
+                        messageHashes, storedMessage.getMessageHash());
+            }
 
             return "Stored message successfully deleted.";
 
