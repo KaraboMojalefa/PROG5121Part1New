@@ -54,10 +54,15 @@ public class Message {
         this.recipient = recipient;
         this.message = message;
 
-        // Create a random ten-digit message ID
+        // Create a random ten-digit message ID using string manipulation
         Random random = new Random();
-        long id = 1000000000L + random.nextInt(900000000);
-        messageID = String.valueOf(id);
+
+        String randomDigits = String.valueOf(
+                1000000000L + random.nextInt(900000000)
+        );
+
+        // Use substring to create the ten-digit message ID
+        messageID = randomDigits.substring(0, 10);
 
         // Create the message hash
         messageHash = createMessageHash();
