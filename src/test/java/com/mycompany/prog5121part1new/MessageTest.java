@@ -198,4 +198,32 @@ public class MessageTest {
             field.set(null, originalMessages);
         }
     }
+    
+    @Test
+    public void testDisplayLongestMessageWhenEmpty() throws Exception {
+
+        // Access the private stored messages array
+        java.lang.reflect.Field field =
+                Message.class.getDeclaredField("storedMessages");
+
+        field.setAccessible(true);
+
+        // Save the original messages
+        Message[] originalMessages =
+                (Message[]) field.get(null);
+
+        try {
+            // Temporarily make the stored messages array empty
+            field.set(null, new Message[0]);
+
+            // Check the response when no messages exist
+            assertEquals(
+                    "No stored messages found.",
+                    Message.displayLongestStoredMessage());
+
+        } finally {
+            // Restore the original messages
+            field.set(null, originalMessages);
+        }
+    }
 }
