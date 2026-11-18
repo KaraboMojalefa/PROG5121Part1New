@@ -2,9 +2,9 @@ name: Java Tests
 
 on:
   push:
-    branches: [ "QuickChatPart2" ]
+    branches: [ "QuickChatPart2", "part3-stored-messages" ]
   pull_request:
-    branches: [ "QuickChatPart2" ]
+    branches: [ "QuickChatPart2", "part3-stored-messages" ]
 
 jobs:
   test:
