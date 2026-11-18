@@ -233,7 +233,10 @@ public class Message {
         return message;
     }
     
-    // Load previously stored messages from the JSON file
+    // Load previously stored messages from the JSON file.
+    // Gson converts JSON data into Java objects.
+    // Source: Google Gson User Guide:
+    // https://github.com/google/gson/blob/main/UserGuide.md
     public static void loadStoredMessages() {
 
         String fileName = "messages.json";
@@ -302,7 +305,7 @@ public class Message {
         return output.toString();
     }
     
-    // Find and display the longest stored message
+        // Find and display the longest stored message
     public static String displayLongestStoredMessage() {
 
         // Check whether there are stored messages
@@ -328,7 +331,6 @@ public class Message {
                 + longestMessage.getMessage().length()
                 + " characters.";
     }
-    
     // Search for a stored message using its Message ID
     public static String searchStoredMessageByID(String searchID) {
 
