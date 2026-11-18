@@ -152,4 +152,50 @@ public class MessageTest {
                 "No stored messages found.",
                 Message.displayStoredSendersAndRecipients());
     }
+    
+    @Test
+    public void testDisplayLongestStoredMessage() throws Exception {
+
+        // Access the private stored messages array
+        java.lang.reflect.Field field =
+                Message.class.getDeclaredField("storedMessages");
+
+        field.setAccessible(true);
+
+        // Save the original messages
+        Message[] originalMessages =
+                (Message[]) field.get(null);
+
+        try {
+            // Create two messages of different lengths
+            Message shortMessage = new Message(
+                    1, "+27834557896", "Hello");
+
+            Message longMessage = new Message(
+                    2, "+27834557896",
+                    "This is the longest stored message");
+
+            // Temporarily populate the stored messages array
+            field.set(null, new Message[]{
+                shortMessage, longMessage
+            });
+
+            // Get the longest message report
+            String result = Message.displayLongestStoredMessage();
+
+            // Check that the longest message is displayed
+            assertTrue(result.contains(
+                    "This is the longest stored message"));
+
+            // Check that the correct message length is displayed
+            assertTrue(result.contains(
+                    "Message Length: "
+                    + longMessage.getMessage().length()
+                    + " characters."));
+
+        } finally {
+            // Restore the original stored messages
+            field.set(null, originalMessages);
+        }
+    }
 }
