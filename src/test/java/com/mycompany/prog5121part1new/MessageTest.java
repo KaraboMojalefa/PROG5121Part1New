@@ -10,6 +10,7 @@ package com.mycompany.prog5121part1new;
  */
 
 import org.junit.jupiter.api.Test;
+import java.lang.reflect.Field;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MessageTest {
