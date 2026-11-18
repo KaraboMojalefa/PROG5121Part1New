@@ -131,4 +131,15 @@ public class MessageTest {
         assertEquals("Mojalefa", msg.getSender());
         assertEquals("+27834557896", msg.getRecipient());
     }
+    
+    @Test
+    public void testUnknownSenderForOlderMessages() {
+
+        // Create a message using the older constructor
+        Message msg = new Message(
+                1, "+27834557896", "Hello");
+
+        // Older messages should display Unknown as the sender
+        assertEquals("Unknown", msg.getSender());
+    }
 }
