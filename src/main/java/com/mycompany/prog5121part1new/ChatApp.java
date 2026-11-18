@@ -323,15 +323,11 @@ public class ChatApp {
                     }
                 }
 
-                // Shows how many messages were sent
+                  // Shows how many messages were sent
                 if (numberOfMessages > 0) {
-                    Message counter = new Message(
-                            0, "+27718693002", "Count"
-                    );
-
                     System.out.println("Total messages sent: "
-                            + counter.returnTotalMessagess());
-                }
+                          + Message.returnTotalMessages());
+                }  
 
             } else if (choice == 2) {
 
