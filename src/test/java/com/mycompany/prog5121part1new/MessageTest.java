@@ -226,4 +226,52 @@ public class MessageTest {
             field.set(null, originalMessages);
         }
     }
+    
+    @Test
+    public void testSearchStoredMessageByID() throws Exception {
+
+        // Access the private stored messages array
+        java.lang.reflect.Field field =
+                Message.class.getDeclaredField("storedMessages");
+
+        field.setAccessible(true);
+
+        // Save the original messages
+        Message[] originalMessages =
+                (Message[]) field.get(null);
+
+        try {
+            // Create a test message
+            Message testMessage = new Message(
+                    1, "Mojalefa",
+                    "+27834557896",
+                    "Testing message ID search");
+
+            // Temporarily add the test message
+            field.set(null, new Message[]{testMessage});
+
+            // Search using the correct ID
+            String result = Message.searchStoredMessageByID(
+                    testMessage.getMessageID());
+
+            assertTrue(result.contains("+27834557896"));
+            assertTrue(result.contains("Testing message ID search"));
+
+            // Search using an incorrect ID
+            assertEquals(
+                    "Message ID not found.",
+                    Message.searchStoredMessageByID("0000000000"));
+
+            // Check the empty storage response
+            field.set(null, new Message[0]);
+
+            assertEquals(
+                    "No stored messages found.",
+                    Message.searchStoredMessageByID("0000000000"));
+
+        } finally {
+            // Restore the original messages
+            field.set(null, originalMessages);
+        }
+    }
 }
