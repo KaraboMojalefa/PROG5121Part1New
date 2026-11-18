@@ -212,7 +212,7 @@ public class ChatApp {
         while (choice != 3) {
 
             System.out.println("\n1. Send Messages");
-            System.out.println("2. Show recently sent messages");
+            System.out.println("2. Coming Soon.");
             System.out.println("3. Quit");
             System.out.println("4. Stored Messages");
             System.out.print("Choose an option: ");
@@ -331,13 +331,7 @@ public class ChatApp {
 
             } else if (choice == 2) {
 
-                String messages = Message.printAllSentMessages();
-
-                if (messages.isEmpty()) {
-                    System.out.println("No messages have been sent yet.");
-                } else {
-                    System.out.println(messages);
-                }
+                System.out.println("Coming Soon.");
 
             } else if (choice == 3) {
 
