@@ -59,7 +59,7 @@ public class MessageTest {
     @Test
     public void testMessageID() {
         // The message ID should contain ten characters
-        Message msg = new Message(0, "+27718693002", "Hello");
+        Message msg = new Message(0, "08575975889", "Hello");
 
         assertTrue(msg.checkMessageID());
         assertEquals(10, msg.getMessageID().length());
