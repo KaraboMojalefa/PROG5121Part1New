@@ -212,7 +212,7 @@ public class ChatApp {
         while (choice != 3) {
 
             System.out.println("\n1. Send Messages");
-            System.out.println("2. Coming Soon.");
+            System.out.println("2. Show recently sent messages");
             System.out.println("3. Quit");
             System.out.println("4. Stored Messages");
             System.out.print("Choose an option: ");

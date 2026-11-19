@@ -11,7 +11,6 @@ package com.mycompany.prog5121part1new;
 
 import java.util.Random;  
 import java.util.Arrays;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -392,34 +391,29 @@ public class Message {
     // Delete a stored message using its Message Hash
     public static String deleteStoredMessageByHash(String searchHash) {
 
-        boolean found = false;
-
-        // Create a temporary array for the remaining messages
         Message[] updatedMessages = new Message[0];
+        Message deletedMessage = null;
 
-        // Search through all stored messages
+        // Find the message that must be deleted
         for (Message storedMessage : storedMessages) {
 
-            if (!found && storedMessage.getMessageHash().equals(searchHash)) {
+            if (deletedMessage == null
+                    && storedMessage.getMessageHash().equals(searchHash)) {
 
-                // Skip the message that must be deleted
-                found = true;
+                deletedMessage = storedMessage;
 
             } else {
 
-                // Keep all messages that are not being deleted
                 updatedMessages = addMessageToArray(
                         updatedMessages, storedMessage);
             }
         }
 
-        // Check whether a matching message was found
-        if (!found) {
+        if (deletedMessage == null) {
             return "Message hash not found.";
         }
 
         try {
-            // Use Gson to rewrite the updated JSON file
             Gson gson = new Gson();
 
             String jsonData = gson.toJson(updatedMessages);
@@ -430,19 +424,18 @@ public class Message {
                     StandardCharsets.UTF_8
             );
 
-            // Update the stored messages array
             storedMessages = updatedMessages;
-            
-            // Rebuild the message ID and hash arrays
-            messageIDs = new String[0];
-            messageHashes = new String[0];
 
-            for (Message storedMessage : storedMessages) {
-                messageIDs = addStringToArray(
-                        messageIDs, storedMessage.getMessageID());
+            // Remove only the deleted message's ID and hash
+            for (int i = 0; i < messageHashes.length; i++) {
 
-                messageHashes = addStringToArray(
-                        messageHashes, storedMessage.getMessageHash());
+                if (messageHashes[i].equals(deletedMessage.getMessageHash())
+                        && messageIDs[i].equals(deletedMessage.getMessageID())) {
+
+                    messageHashes = removeStringAtIndex(messageHashes, i);
+                    messageIDs = removeStringAtIndex(messageIDs, i);
+                    break;
+                }
             }
 
             return "Stored message successfully deleted.";
@@ -451,6 +444,29 @@ public class Message {
 
             return "Message could not be deleted.";
         }
+    }
+
+    // Remove one item from a string array
+    private static String[] removeStringAtIndex(
+            String[] oldArray, int index) {
+
+        if (index < 0 || index >= oldArray.length) {
+            return oldArray;
+        }
+
+        String[] newArray = new String[oldArray.length - 1];
+
+        System.arraycopy(oldArray, 0, newArray, 0, index);
+
+        System.arraycopy(
+                oldArray,
+                index + 1,
+                newArray,
+                index,
+                oldArray.length - index - 1
+        );
+
+        return newArray;
     }
     
     // Generate a full report of all stored messages
@@ -502,51 +518,35 @@ public class Message {
         return report.toString();
     }
 
-    // Save the message details in a JSON file
+    // Save the message details in a JSON file using Gson
     public String storeMessage() {
+
         String fileName = "messages.json";
-        String oldData = "[]";
 
         try {
-            // Read the messages already saved
-            if (Files.exists(Paths.get(fileName))) {
-                String savedData = Files.readString(
-                        Paths.get(fileName),
-                        StandardCharsets.UTF_8
-                ).trim();
+            // Add this message to the existing stored messages
+            Message[] updatedMessages = addMessageToArray(
+                    storedMessages, this);
 
-                // Keep the old data if it is a JSON array
-                if (savedData.startsWith("[") && savedData.endsWith("]")) {
-                    oldData = savedData;
-                }
-            }
+            // Convert the message array into JSON
+            Gson gson = new Gson();
 
-            // Remove the closing bracket before adding a message
-            String content = oldData.substring(0, oldData.length() - 1);
+            String jsonData = gson.toJson(updatedMessages);
 
-            if (!content.trim().equals("[")) {
-                content += ",";
-            }
+            // Write the JSON data to the file
+            Files.writeString(
+                    Paths.get(fileName),
+                    jsonData,
+                    StandardCharsets.UTF_8
+            );
 
-            content += "{"
-                    + "\"sender\":\"" + escapeJson(sender) + "\","
-                    + "\"messageID\":\"" + escapeJson(messageID) + "\","
-                    + "\"messageHash\":\"" + escapeJson(messageHash) + "\","
-                    + "\"recipient\":\"" + escapeJson(recipient) + "\","
-                    + "\"message\":\"" + escapeJson(message) + "\""
-                    + "}]";
-
-            // Save all messages as one JSON array
-            try (FileWriter writer = new FileWriter(fileName, false)) {
-                writer.write(content);
-            }
-
-            // Add the successfully stored message to the array
-            storedMessages = addMessageToArray(storedMessages, this);
+            // Update the stored messages array
+            storedMessages = updatedMessages;
 
             return "Message successfully stored.";
 
         } catch (IOException e) {
+
             return "Message could not be stored.";
         }
     }

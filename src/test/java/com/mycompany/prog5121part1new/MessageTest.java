@@ -12,6 +12,10 @@ package com.mycompany.prog5121part1new;
 import org.junit.jupiter.api.Test;
 import java.lang.reflect.Field;
 import static org.junit.jupiter.api.Assertions.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.charset.StandardCharsets;
+import com.google.gson.Gson;
 
 public class MessageTest {
     
@@ -50,7 +54,7 @@ public class MessageTest {
     @Test
     public void testRecipientNumberFailure() {
         // This number is not in the correct format
-        Message msg = new Message(0, "12345", "Hello");
+        Message msg = new Message(0, "08575975889", "Hello");
 
         assertEquals(
                 "Cell phone number is incorrectly formatted or does not contain an international code. Please correct the number and try again.",
@@ -272,6 +276,206 @@ public class MessageTest {
         } finally {
             // Restore the original messages
             field.set(null, originalMessages);
+        }
+    }
+    
+    @Test
+    public void testSearchStoredMessagesByRecipient() throws Exception {
+
+        Field field = Message.class.getDeclaredField("storedMessages");
+        field.setAccessible(true);
+
+        Message[] originalMessages = (Message[]) field.get(null);
+
+        try {
+            Message first = new Message(
+                    1, "Sender", "+27834557896", "First message");
+
+            Message second = new Message(
+                    2, "Sender", "+27834557896", "Second message");
+
+            Message third = new Message(
+                    3, "Sender", "+27838884567", "Other recipient");
+
+            field.set(null, new Message[]{first, second, third});
+
+            String result = Message.searchStoredMessagesByRecipient(
+                    "+27834557896");
+
+            assertTrue(result.contains("First message"));
+            assertTrue(result.contains("Second message"));
+            assertFalse(result.contains("Other recipient"));
+
+            assertEquals(
+                    "No messages found for this recipient.",
+                    Message.searchStoredMessagesByRecipient("+27000000000"));
+
+        } finally {
+            field.set(null, originalMessages);
+        }
+    }
+
+    @Test
+    public void testDeleteStoredMessageByHash() throws Exception {
+
+        Field storedField =
+                Message.class.getDeclaredField("storedMessages");
+        Field idsField =
+                Message.class.getDeclaredField("messageIDs");
+        Field hashesField =
+                Message.class.getDeclaredField("messageHashes");
+
+        storedField.setAccessible(true);
+        idsField.setAccessible(true);
+        hashesField.setAccessible(true);
+
+        Message[] originalMessages = (Message[]) storedField.get(null);
+        String[] originalIDs = (String[]) idsField.get(null);
+        String[] originalHashes = (String[]) hashesField.get(null);
+
+        boolean fileExisted = Files.exists(Paths.get("messages.json"));
+        String originalFile = fileExisted
+                ? Files.readString(Paths.get("messages.json"))
+                : null;
+
+        try {
+            Message first = new Message(
+                    1, "Sender", "+27834557896", "Keep this message");
+
+            Message second = new Message(
+                    2, "Sender", "+27834557896", "Delete this message");
+
+            storedField.set(null, new Message[]{first, second});
+            idsField.set(null, new String[]{
+                first.getMessageID(), second.getMessageID()
+            });
+            hashesField.set(null, new String[]{
+                first.getMessageHash(), second.getMessageHash()
+            });
+
+            String result = Message.deleteStoredMessageByHash(
+                    second.getMessageHash());
+
+            assertEquals(
+                    "Stored message successfully deleted.", result);
+
+            Message[] remaining = (Message[]) storedField.get(null);
+
+            assertEquals(1, remaining.length);
+            assertEquals(first.getMessageID(), remaining[0].getMessageID());
+
+            assertEquals(1, ((String[]) idsField.get(null)).length);
+            assertEquals(1, ((String[]) hashesField.get(null)).length);
+
+            assertEquals(
+                    "Message hash not found.",
+                    Message.deleteStoredMessageByHash("INVALIDHASH"));
+
+        } finally {
+            storedField.set(null, originalMessages);
+            idsField.set(null, originalIDs);
+            hashesField.set(null, originalHashes);
+
+            if (fileExisted) {
+                Files.writeString(
+                        Paths.get("messages.json"),
+                        originalFile,
+                        StandardCharsets.UTF_8);
+            } else {
+                Files.deleteIfExists(Paths.get("messages.json"));
+            }
+        }
+    }
+
+    @Test
+    public void testFullStoredMessageReport() throws Exception {
+
+        Field field = Message.class.getDeclaredField("storedMessages");
+        field.setAccessible(true);
+
+        Message[] originalMessages = (Message[]) field.get(null);
+
+        try {
+            Message testMessage = new Message(
+                    1, "Mojalefa", "+27834557896",
+                    "Testing the full stored message report");
+
+            field.set(null, new Message[]{testMessage});
+
+            String result = Message.displayFullStoredMessageReport();
+
+            assertTrue(result.contains("FULL STORED MESSAGES REPORT"));
+            assertTrue(result.contains("Mojalefa"));
+            assertTrue(result.contains("+27834557896"));
+            assertTrue(result.contains(testMessage.getMessageID()));
+            assertTrue(result.contains(testMessage.getMessageHash()));
+            assertTrue(result.contains("Testing the full stored message report"));
+            assertTrue(result.contains("Total Stored Messages: 1"));
+
+        } finally {
+            field.set(null, originalMessages);
+        }
+    }
+
+    @Test
+    public void testLoadStoredMessagesFromJSON() throws Exception {
+
+        Field storedField =
+                Message.class.getDeclaredField("storedMessages");
+        Field idsField =
+                Message.class.getDeclaredField("messageIDs");
+        Field hashesField =
+                Message.class.getDeclaredField("messageHashes");
+
+        storedField.setAccessible(true);
+        idsField.setAccessible(true);
+        hashesField.setAccessible(true);
+
+        Message[] originalMessages = (Message[]) storedField.get(null);
+        String[] originalIDs = (String[]) idsField.get(null);
+        String[] originalHashes = (String[]) hashesField.get(null);
+
+        boolean fileExisted = Files.exists(Paths.get("messages.json"));
+        String originalFile = fileExisted
+                ? Files.readString(Paths.get("messages.json"))
+                : null;
+
+        try {
+            Message testMessage = new Message(
+                    1, "Mojalefa", "+27834557896",
+                    "Testing JSON loading");
+
+            Gson gson = new Gson();
+
+            Files.writeString(
+                    Paths.get("messages.json"),
+                    gson.toJson(new Message[]{testMessage}),
+                    StandardCharsets.UTF_8
+            );
+
+            Message.loadStoredMessages();
+
+            Message[] loaded = (Message[]) storedField.get(null);
+
+            assertEquals(1, loaded.length);
+            assertEquals(testMessage.getMessageID(), loaded[0].getMessageID());
+            assertEquals(testMessage.getMessage(), loaded[0].getMessage());
+            assertEquals(1, ((String[]) idsField.get(null)).length);
+            assertEquals(1, ((String[]) hashesField.get(null)).length);
+
+        } finally {
+            storedField.set(null, originalMessages);
+            idsField.set(null, originalIDs);
+            hashesField.set(null, originalHashes);
+
+            if (fileExisted) {
+                Files.writeString(
+                        Paths.get("messages.json"),
+                        originalFile,
+                        StandardCharsets.UTF_8);
+            } else {
+                Files.deleteIfExists(Paths.get("messages.json"));
+            }
         }
     }
 }
